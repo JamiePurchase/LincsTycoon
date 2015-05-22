@@ -38,6 +38,16 @@ public class Main extends SimpleApplication
         }
     };
     
+    private void changeState(String oldState)
+    {
+        if(oldState.equals("TITLE"))
+        {
+            guiNode.detachChild(logo);
+            cam.setLocation(new Vector3f(0f, 50f, 10f));
+            cam.lookAt(new Vector3f(0f, 0f, 0f), Vector3f.UNIT_Y);
+        }
+    }
+    
     public static State getState()
     {
         return STATE;
@@ -55,7 +65,7 @@ public class Main extends SimpleApplication
         // Earth Geometry
         Geometry earth_g = new Geometry("Earth", new Box(50, 1, 50));
         Material earth_m = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        earth_m.setColor("Color", ColorRGBA.Green);
+        earth_m.setTexture("ColorMap", assetManager.loadTexture("Textures/grass2.png"));
         earth_g.setMaterial(earth_m);
         earth_g.setLocalTranslation(2.0f, -2.5f, 0.0f);
         rootNode.attachChild(earth_g);
@@ -86,7 +96,7 @@ public class Main extends SimpleApplication
     {
         if(getState().getNextReady())
         {
-            if(getState().getName().equals("TITLE")) {guiNode.detachChild(logo);}
+            changeState(getState().getName());
             setState(getState().getNextState());
         }
         else
