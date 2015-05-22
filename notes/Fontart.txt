@@ -1,0 +1,7 @@
+http://cooltext.com/Logo-Design?LogoID=1189304619
+
+font		Alfred Drake (size 70)
+gradient	golden
+outline		#000000 (width 1)
+shadow		#7A7A1B (offset 2,2) (opacity 75)
+background	#000000
