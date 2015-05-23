@@ -12,6 +12,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 import com.jme3.ui.Picture;
 import states.State;
@@ -42,7 +43,20 @@ public class Main extends SimpleApplication
     {
         if(oldState.equals("TITLE"))
         {
+            // Remove title (NOTE: need to handle title better)
             guiNode.detachChild(logo);
+            
+            // Location Nodes
+            for(int x = 0; x < 40; x++)
+            {
+                Node location = new Node();
+                location.setUserData("locationID", x);
+                rootNode.attachChild(location);
+                // NOTE: do nodes have a physical position?
+                // we need to think about how to store the coords
+            }
+            
+            // Camera (overview)
             cam.setLocation(new Vector3f(0f, 50f, 10f));
             cam.lookAt(new Vector3f(0f, 0f, 0f), Vector3f.UNIT_Y);
         }
@@ -63,6 +77,7 @@ public class Main extends SimpleApplication
     public void simpleInitApp()
     {
         // Earth Geometry
+        viewPort.setBackgroundColor(new ColorRGBA(0.7f,0.8f,1f,1f));
         Geometry earth_g = new Geometry("Earth", new Box(50, 1, 50));
         Material earth_m = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         earth_m.setTexture("ColorMap", assetManager.loadTexture("Textures/grass2.png"));
@@ -80,12 +95,12 @@ public class Main extends SimpleApplication
         
         // Text?
         //guiNode.detachAllChildren();
-        guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
+        /*guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
         BitmapText helloText = new BitmapText(guiFont, false);
         helloText.setSize(guiFont.getCharSet().getRenderedSize());
         helloText.setText("Hello World");
         helloText.setLocalTranslation(300, helloText.getLineHeight(), 0);
-        guiNode.attachChild(helloText);
+        guiNode.attachChild(helloText);*/
         
         // Custom Input
         initInput();
